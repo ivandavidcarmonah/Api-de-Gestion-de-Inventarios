@@ -4,7 +4,7 @@ app:
 spring:
   datasource: 
     url: jdbc:mysql://127.0.0.1:3306/desa_daviddev
-    password: 19616798
+    password: root
     username: root
   jpa:
     show-sql: true
@@ -18,5 +18,3 @@ spring:
       tomcat:
           max-swallow-size: -1
           max-http-form-post-size: -1B
-  flaway:
-     locations: classpath:/db/migration,classpath:/db/testdata

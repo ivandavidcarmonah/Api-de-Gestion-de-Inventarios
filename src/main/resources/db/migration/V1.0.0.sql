@@ -36,7 +36,7 @@ CREATE TABLE `bar_tables` (
   `id_company` bigint DEFAULT NULL,
   PRIMARY KEY (`id_bar_table`),
   KEY `FKqau3vih28wxr9umhh2eyqhmwi` (`id_company`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `coments_publication` (
   `publication_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FKoq0vv8nea252infxe093lkidj` (`publication_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `company` (
   `id_type_license` bigint DEFAULT NULL,
   PRIMARY KEY (`id_company`),
   KEY `FK360nf06t5lb6nk4x8t3of70oo` (`id_type_license`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `gender` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UKjdyxf8c9k9656frmqjb67cgo3` (`name`),
   UNIQUE KEY `UKmxvfcsf1euhi5hsw1uecvke7b` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,7 +155,7 @@ CREATE TABLE `language` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UKg8hr207ijpxlwu10pewyo65gv` (`name`),
   UNIQUE KEY `UK5h2eb4yggd9jjo1x9kd594t02` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +194,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`id_product`),
   KEY `FKfnnww0qeerpruunjakntgnn4p` (`id_company`),
   KEY `FKt2qbe0gp8fnpugruwll45mmj` (`id_types_products`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +220,7 @@ CREATE TABLE `publication` (
   `title` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UKnrkcidigvkemps7kkfn25nvg1` (`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +243,7 @@ CREATE TABLE `roles` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +268,7 @@ CREATE TABLE `types_license` (
   `description` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_type_license`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -297,7 +297,7 @@ CREATE TABLE `types_products` (
   `id_company` bigint DEFAULT NULL,
   PRIMARY KEY (`id_types_products`),
   KEY `FKfuws03wc0634qjbdldyxh95bi` (`id_company`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -339,7 +339,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`),
   KEY `FKld9x6vyo1xd6shjgkojm0fqmt` (`language_id`),
   KEY `FKo0h29eo9e4y4wvd5yh0sn03rp` (`gender_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,7 +364,7 @@ CREATE TABLE `usuarios_roles` (
   `rol_id` bigint NOT NULL,
   PRIMARY KEY (`usuario_id`,`rol_id`),
   KEY `FK5338ehgluufgc8bpj08nrq970` (`rol_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

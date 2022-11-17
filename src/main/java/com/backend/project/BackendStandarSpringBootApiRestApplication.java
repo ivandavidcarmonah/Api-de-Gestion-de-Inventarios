@@ -1,5 +1,6 @@
 package com.backend.project;
 
+import org.flywaydb.core.Flyway;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +16,7 @@ public class BackendStandarSpringBootApiRestApplication extends SpringBootServle
 	
 	
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		
         return application.sources(BackendStandarSpringBootApiRestApplication.class);
     }
 	
@@ -24,6 +26,8 @@ public class BackendStandarSpringBootApiRestApplication extends SpringBootServle
 	}
 	
 	public static void main(String[] args) {
+		Flyway flyway = Flyway.configure().dataSource("jdbc:mysql://127.0.0.1:3306/desa_daviddev", "root", "root").load();
+		flyway.migrate();
 		SpringApplication.run(BackendStandarSpringBootApiRestApplication.class, args);
 	}
 
