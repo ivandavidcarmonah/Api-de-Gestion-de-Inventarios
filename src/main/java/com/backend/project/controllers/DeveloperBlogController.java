@@ -28,9 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.backend.project.DTO.DeveloperBlogDTOs.DeveloperBlogDTO;
 import com.backend.project.DTO.DeveloperBlogDTOs.DeveloperBlogResponseDTO;
-import com.backend.project.DTO.PublicationDTOs.PublicationDTO;
-import com.backend.project.DTO.PublicationDTOs.PublicationResponseDTO;
-import com.backend.project.services.PublicationService;
 import com.backend.project.services.impl.DeveloperBlogServiceImp;
 import com.backend.project.utils.AppConstants;
 import com.backend.project.utils.FileUploadUtil;

@@ -18,3 +18,5 @@ spring:
       tomcat:
           max-swallow-size: -1
           max-http-form-post-size: -1B
+  server:
+     port: 5001

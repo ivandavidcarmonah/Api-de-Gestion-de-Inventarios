@@ -1,6 +1,7 @@
 package com.backend.project.services.impl;
 
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ import com.backend.project.entities.DeveloperBlogEntity;
 import com.backend.project.exceptions.ResourceNotFoundException;
 import com.backend.project.repositories.DeveloperBlogRepository;
 import com.backend.project.services.DeveloperBlogService;
+import com.backend.project.utils.AppConstants;
 
 @Service
 public class DeveloperBlogServiceImp extends AuditModel implements DeveloperBlogService {
@@ -109,6 +111,16 @@ public class DeveloperBlogServiceImp extends AuditModel implements DeveloperBlog
 		DeveloperBlogEntity element = this.developerBlogRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Publications", "id", id));
 
+		/**
+		 * Eliminar imagen si existe
+		 */
+		if (element.getImagenBody().length() > 0) {
+			File fichero = new File(AppConstants.DEVELOPER_BLOG_DIR + element.getImagenBody());
+			if (fichero.delete())
+				   System.out.println("El fichero ha sido borrado satisfactoriamente");
+				else
+				   System.out.println("El fichero no puede ser borrado");
+		}
 		element.setUpdate_date(LocalDateTime.now());
 		element.setImagenBody(fileName);
 		DeveloperBlogEntity elementEntity = this.developerBlogRepository.save(element);
@@ -120,7 +132,18 @@ public class DeveloperBlogServiceImp extends AuditModel implements DeveloperBlog
 	public DeveloperBlogDTO updateImagenBlogHeaderDTODto(String fileName, long id) {
 		DeveloperBlogEntity element = this.developerBlogRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Publications", "id", id));
-
+		/**
+		 * Eliminar imagen si existe
+		 */
+		if (element.getImagenHeader().length() > 0) {
+			File fichero = new File(AppConstants.DEVELOPER_BLOG_DIR + element.getImagenHeader());
+			if (fichero.delete())
+				   System.out.println("El fichero ha sido borrado satisfactoriamente");
+				else
+				   System.out.println("El fichero no puede ser borrado");
+		}
+		
+		
 		element.setUpdate_date(LocalDateTime.now());
 		element.setImagenHeader(fileName);
 		DeveloperBlogEntity elementEntity = this.developerBlogRepository.save(element);
