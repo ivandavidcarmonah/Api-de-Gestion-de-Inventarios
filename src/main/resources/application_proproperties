@@ -1,0 +1,6 @@
+server.port=8443
+server.ssl.key-alias=mycert
+server.ssl.key-store-password=s$cret
+server.ssl.key-store=classpath:zetcode.p12
+server.ssl.key-store-provider=SUN
+server.ssl.key-store-type=PKCS12

@@ -4,8 +4,6 @@ package com.backend.project.controllers;
 
 import java.sql.Date;
 import java.util.Collections;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;

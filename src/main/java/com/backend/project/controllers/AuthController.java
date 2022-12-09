@@ -1,7 +1,6 @@
 package com.backend.project.controllers;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
