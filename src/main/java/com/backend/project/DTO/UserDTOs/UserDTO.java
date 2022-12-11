@@ -9,6 +9,7 @@ public class UserDTO {
 	private String name;
 	private String email;
 	private String username;
+	private String pictureUser;
 	
 	private  Set<RolesUserDTO> roles = new HashSet<RolesUserDTO>();
 	
@@ -63,5 +64,15 @@ public class UserDTO {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public String getPictureUser() {
+		return pictureUser;
+	}
+
+	public void setPictureUser(String pictureUser) {
+		this.pictureUser = pictureUser;
+	}
+	
+	
 	
 }

@@ -1,14 +1,7 @@
 package com.backend.project.DTO.AuditDTOs.AuditCreate;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.backend.project.DTO.UserDTOs.UserDTO;
-import com.backend.project.entities.ComentsPublication;
 
 
 public class AuditDTO {

@@ -18,4 +18,6 @@ public interface UserService {
 	public UserDetailDTO updateUser(UserDetailDTO reqDto, long id);
 //
 	public void deleteUser(long id);
+
+	public UserDTO getUserId(long id);
 }

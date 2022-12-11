@@ -1,14 +1,12 @@
 package com.backend.project.DTO.DeveloperBlogDTOs;
 
 import java.time.LocalDateTime;
-import java.util.Set;
-
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import com.backend.project.DTO.AuditDTOs.AuditCreate.AuditDTO;
-import com.backend.project.entities.ComentsPublication;
+import com.backend.project.DTO.UserDTOs.UserDTO;
+import com.backend.project.DTO.UserDTOs.UserDetailDTO;
 
 public class DeveloperBlogDTO extends AuditDTO{
 
@@ -30,6 +28,11 @@ public class DeveloperBlogDTO extends AuditDTO{
 	private String imagenHeader;
 	
 	private String imagenBody;
+	
+	private UserDTO user;
+
+	
+
 
 	public DeveloperBlogDTO() {
 		super();
@@ -103,5 +106,16 @@ public class DeveloperBlogDTO extends AuditDTO{
 	public void setImagenBody(String imagenBody) {
 		this.imagenBody = imagenBody;
 	}
+	
+	public UserDTO getUser() {
+		return user;
+	}
+
+
+	public void setUser(UserDTO created_by) {
+		this.user = created_by;
+	}
+
+
 
 }

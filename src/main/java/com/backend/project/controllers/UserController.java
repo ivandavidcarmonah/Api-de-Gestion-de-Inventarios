@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.project.DTO.UserDTOs.RegisterUserDTO;
-import com.backend.project.DTO.UserDTOs.UserDTO;
 import com.backend.project.DTO.UserDTOs.UserDetailDTO;
 import com.backend.project.DTO.UserDTOs.UserResponseDTO;
 import com.backend.project.entities.RolesEntity;

@@ -65,8 +65,8 @@ public class DeveloperBlogController {
 	}
 
 
-	
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_EDITOR')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<DeveloperBlogDTO> updatePublication( @RequestBody DeveloperBlogDTO reqDto,
 			@PathVariable(name = "id") long id) {
@@ -76,7 +76,7 @@ public class DeveloperBlogController {
 
 
 	
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_EDITOR')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deletePublication(@PathVariable(name = "id") long id) {
 		this.service.deletePublication(id);
@@ -96,7 +96,7 @@ public class DeveloperBlogController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
     
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+	
     @PostMapping("/save-file/header/{id}")
     public ResponseEntity<byte[]> saveFile(@PathVariable("id") long id, @RequestParam("file") MultipartFile multipartFile) throws IOException {
     	String fileName = FileUploadUtil.cadenaAleatoria(30).toUpperCase().concat(".").concat(FilenameUtils.getExtension(StringUtils.cleanPath(multipartFile.getOriginalFilename())));
@@ -108,7 +108,7 @@ public class DeveloperBlogController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
     
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+	
     @PostMapping("/save-file/body/{id}")
     public ResponseEntity<byte[]> saveFileBody(@PathVariable("id") long id, @RequestParam("file") MultipartFile multipartFile) throws IOException {
     	String fileName = FileUploadUtil.cadenaAleatoria(30).toUpperCase().concat(".").concat(FilenameUtils.getExtension(StringUtils.cleanPath(multipartFile.getOriginalFilename())));

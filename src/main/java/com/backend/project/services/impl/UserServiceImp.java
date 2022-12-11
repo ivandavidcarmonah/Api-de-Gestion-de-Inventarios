@@ -12,11 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.backend.project.DTO.PublicationDTOs.PublicationDTO;
 import com.backend.project.DTO.UserDTOs.UserDTO;
 import com.backend.project.DTO.UserDTOs.UserDetailDTO;
 import com.backend.project.DTO.UserDTOs.UserResponseDTO;
-import com.backend.project.entities.PublicationsEntity;
 import com.backend.project.entities.UserEntity;
 import com.backend.project.exceptions.ResourceNotFoundException;
 import com.backend.project.repositories.GenderRepository;
@@ -53,6 +51,13 @@ public class UserServiceImp implements UserService {
 		UserEntity userEntity= this.userRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Users", "id", id));
 		return mapUserDetailDTO(userEntity);
+	}
+	
+	@Override
+	public UserDTO getUserId(long id) {
+		UserEntity userEntity= this.userRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Users", "id", id));
+		return mapUserDTO(userEntity);
 	}
 
 	/**
@@ -132,6 +137,11 @@ public class UserServiceImp implements UserService {
 	 */
 	private UserDetailDTO mapUserDetailDTO(UserEntity user) {
 		UserDetailDTO userDetailDTO = this.modelMapper.map(user, UserDetailDTO.class);
+		return userDetailDTO;
+	}
+	
+	private UserDTO mapUserDTO(UserEntity user) {
+		UserDTO userDetailDTO = this.modelMapper.map(user, UserDTO.class);
 		return userDetailDTO;
 	}
 

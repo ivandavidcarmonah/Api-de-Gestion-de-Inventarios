@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import com.backend.project.DTO.DeveloperBlogDTOs.DeveloperBlogDTO;
 import com.backend.project.DTO.DeveloperBlogDTOs.DeveloperBlogResponseDTO;
+import com.backend.project.DTO.UserDTOs.UserDTO;
+import com.backend.project.DTO.UserDTOs.UserDetailDTO;
 import com.backend.project.entities.DeveloperBlogEntity;
 import com.backend.project.exceptions.ResourceNotFoundException;
 import com.backend.project.repositories.DeveloperBlogRepository;
@@ -31,7 +33,10 @@ public class DeveloperBlogServiceImp extends AuditModel implements DeveloperBlog
 	
 	@Autowired
 	private DeveloperBlogRepository developerBlogRepository;
-
+	
+	@Autowired
+	private UserServiceImp userServiceImp;
+	
 	@Override
 	public DeveloperBlogDTO createPublication(DeveloperBlogDTO dto) {
 		// Convert DTO to Entities
@@ -88,6 +93,7 @@ public class DeveloperBlogServiceImp extends AuditModel implements DeveloperBlog
 		// TODO Auto-generated method stub
 		DeveloperBlogEntity publications = this.developerBlogRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("DeveloperBlog", "id", id));
+		
 		return mapDTO(publications);
 	}
 
@@ -168,6 +174,9 @@ public class DeveloperBlogServiceImp extends AuditModel implements DeveloperBlog
 	 */
 	private DeveloperBlogDTO mapDTO(DeveloperBlogEntity entity) {
 		DeveloperBlogDTO value = this.modelMapper.map(entity, DeveloperBlogDTO.class);
+		
+		UserDTO user = this.userServiceImp.getUserId(value.getCreated_by());
+		value.setUser(user);
 		return value;
 	}
 
