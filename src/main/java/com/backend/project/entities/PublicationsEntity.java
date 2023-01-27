@@ -1,6 +1,5 @@
 package com.backend.project.entities;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;

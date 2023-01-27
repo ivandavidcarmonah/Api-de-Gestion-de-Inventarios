@@ -102,6 +102,7 @@ public class ProductServiceImp implements ProductService {
 	 * @param dto
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private ProductDTO mapVistaDTOV(ProductEntity productEntity) {
 		return this.modelMapper.map(productEntity, ProductDTO.class);
 	}

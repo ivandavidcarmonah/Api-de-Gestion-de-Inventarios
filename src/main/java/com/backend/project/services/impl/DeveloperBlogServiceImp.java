@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import com.backend.project.DTO.DeveloperBlogDTOs.DeveloperBlogDTO;
 import com.backend.project.DTO.DeveloperBlogDTOs.DeveloperBlogResponseDTO;
 import com.backend.project.DTO.UserDTOs.UserDTO;
-import com.backend.project.DTO.UserDTOs.UserDetailDTO;
 import com.backend.project.entities.DeveloperBlogEntity;
 import com.backend.project.exceptions.ResourceNotFoundException;
 import com.backend.project.repositories.DeveloperBlogRepository;

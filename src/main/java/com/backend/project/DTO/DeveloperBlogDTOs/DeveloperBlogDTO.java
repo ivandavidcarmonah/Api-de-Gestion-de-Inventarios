@@ -6,7 +6,6 @@ import javax.validation.constraints.Size;
 
 import com.backend.project.DTO.AuditDTOs.AuditCreate.AuditDTO;
 import com.backend.project.DTO.UserDTOs.UserDTO;
-import com.backend.project.DTO.UserDTOs.UserDetailDTO;
 
 public class DeveloperBlogDTO extends AuditDTO{
 

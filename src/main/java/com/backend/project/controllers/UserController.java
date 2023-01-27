@@ -2,8 +2,9 @@ package com.backend.project.controllers;
 
 
 
-import java.sql.Date;
 import java.util.Collections;
+
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class UserController {
 	private LanguageRepository languageRepository;
 	
 
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
 	@GetMapping("/list-users")
 	public UserResponseDTO getUsers(@Valid
 			@RequestParam(value = AppConstants.NUMBER_PAGE, defaultValue = "0", required = false) int numberPage,
@@ -71,13 +72,13 @@ public class UserController {
 		return this.userService.getUsers(numberPage, pageSize, orderBy, sortDir);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
 	@GetMapping("/edit-user/{id}")
 	public ResponseEntity<UserDetailDTO> getUserById(@PathVariable(name = "id") long id) {
 		return ResponseEntity.ok( this.userService.getUserById(id));
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
 	@PostMapping("/new-user")
 	public ResponseEntity<?> editUser(@RequestBody RegisterUserDTO registerUserDTO){
 		if(this.userRepository.existsByUsername(registerUserDTO.getUsername())) {
@@ -96,10 +97,7 @@ public class UserController {
 		userEntity.setLanguage(this.languageRepository.getById(registerUserDTO.getIdLanguage()));
 		userEntity.setGender(this.genderRepository.getById(registerUserDTO.getIdGender()));
 
-		//Para almacenar la fecha en BD se necesitan en milisegundos
-		long miliseconds = System.currentTimeMillis(); //Fecha en milisegundos Actual del sistema
-        Date date = new Date(miliseconds);
-        
+	
 		userEntity.setPassword(this.passwordEncoder.encode(registerUserDTO.getUsername()));
 		this.userRepository.save(userEntity);
 
@@ -111,7 +109,7 @@ public class UserController {
 		
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
 	@PutMapping("/update-user")
 	public ResponseEntity<UserDetailDTO> updateUser(@RequestBody UserDetailDTO updateUserDto){
 		UserDetailDTO detailDTO = this.userService.updateUser(updateUserDto, updateUserDto.getId());
@@ -121,7 +119,7 @@ public class UserController {
 	}
 	
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteUser(@PathVariable(name = "id") long id) {
 		this.userService.deleteUser(id);

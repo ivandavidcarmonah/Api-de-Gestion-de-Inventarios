@@ -63,6 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/api/bartable/**").permitAll()
 			.antMatchers("/api/master-data/**").permitAll()
 			.antMatchers("/api/developer-blog/**").permitAll()
+			.antMatchers("/api/contact/**").permitAll()
+			.antMatchers("/api/roles/**").permitAll()
+			
 			.anyRequest()
 			.authenticated();
 		

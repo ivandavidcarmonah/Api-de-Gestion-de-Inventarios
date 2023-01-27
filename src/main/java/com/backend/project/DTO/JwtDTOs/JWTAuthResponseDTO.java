@@ -1,6 +1,5 @@
 package com.backend.project.DTO.JwtDTOs;
 
-import com.backend.project.DTO.UserDTOs.RegisterUserDTO;
 import com.backend.project.DTO.UserDTOs.UserDTO;
 
 public class JWTAuthResponseDTO {

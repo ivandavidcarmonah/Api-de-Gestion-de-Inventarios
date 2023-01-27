@@ -2,6 +2,7 @@ package com.backend.project.services.impl;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -12,13 +13,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.backend.project.DTO.UserDTOs.RolesUserDTO;
 import com.backend.project.DTO.UserDTOs.UserDTO;
 import com.backend.project.DTO.UserDTOs.UserDetailDTO;
 import com.backend.project.DTO.UserDTOs.UserResponseDTO;
+import com.backend.project.entities.RolesEntity;
 import com.backend.project.entities.UserEntity;
 import com.backend.project.exceptions.ResourceNotFoundException;
-import com.backend.project.repositories.GenderRepository;
-import com.backend.project.repositories.LanguageRepository;
 import com.backend.project.repositories.UserRepository;
 import com.backend.project.services.UserService;
 
@@ -29,11 +30,11 @@ public class UserServiceImp implements UserService {
 	private ModelMapper modelMapper;
 	
 
-	@Autowired
-	private GenderRepository genderRepository;
-
-	@Autowired
-	private LanguageRepository languageRepository;
+//	@Autowired
+//	private GenderRepository genderRepository;
+//
+//	@Autowired
+//	private LanguageRepository languageRepository;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -50,7 +51,11 @@ public class UserServiceImp implements UserService {
 	public UserDetailDTO getUserById(long id) {
 		UserEntity userEntity= this.userRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Users", "id", id));
-		return mapUserDetailDTO(userEntity);
+
+		UserDetailDTO detailDTO = new UserDetailDTO();
+		detailDTO =  mapUserDetailDTO(userEntity);
+		
+		return detailDTO;
 	}
 	
 	@Override
@@ -92,16 +97,17 @@ public class UserServiceImp implements UserService {
 		UserEntity user = this.userRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Users", "id", id));
 
+		@SuppressWarnings("unused")
 		UserEntity userUpdate = new UserEntity();
 		userUpdate = this.mapEntitie(reqDto);
 		
-		user.setName(reqDto.getName());
-		user.setEmail(reqDto.getEmail());
-		user.setName(reqDto.getName());
-		user.setUsername(reqDto.getUsername());
-		user.setNumberPhone(reqDto.getNumberPhone());
-		user.setBirthDate(reqDto.getBirthDate());
-
+		user.setName(userUpdate.getName());
+		user.setEmail(userUpdate.getEmail());
+		user.setName(userUpdate.getName());
+		user.setUsername(userUpdate.getUsername());
+		user.setNumberPhone(userUpdate.getNumberPhone());
+		user.setBirthDate(userUpdate.getBirthDate());
+		user.setRoles(userUpdate.getRoles());
 //		if (user.getLanguage().getId() != reqDto.getIdLanguage()) {
 //			user.setLanguage(this.languageRepository.getById(reqDto.getIdLanguage()));
 //		}
@@ -111,7 +117,8 @@ public class UserServiceImp implements UserService {
 	
 		//Para almacenar la fecha en BD se necesitan en milisegundos
 		long miliseconds = System.currentTimeMillis(); //Fecha en milisegundos Actual del sistema
-        Date date = new Date(miliseconds);
+        @SuppressWarnings("unused")
+		Date date = new Date(miliseconds);
 		
 		
         UserEntity update = this.userRepository.save(user);
@@ -151,6 +158,7 @@ public class UserServiceImp implements UserService {
 	 * @param UserDTO
 	 * @return UserEntity
 	 */
+	@SuppressWarnings("unused")
 	private UserEntity mapEntitie(UserDTO dto) {
 		UserEntity entity = this.modelMapper.map(dto, UserEntity.class);
 		return entity;
@@ -166,6 +174,11 @@ public class UserServiceImp implements UserService {
 	private UserEntity mapEntitie(UserDetailDTO dto) {
 		UserEntity entity = this.modelMapper.map(dto, UserEntity.class);
 		return entity;
+	}
+	
+	private RolesUserDTO mapDTO(RolesEntity value) {
+		RolesUserDTO rol = this.modelMapper.map(value, RolesUserDTO.class);
+		return rol;
 	}
 
 

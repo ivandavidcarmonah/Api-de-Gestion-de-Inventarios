@@ -3,7 +3,6 @@ package com.backend.project.DTO.PublicationDTOs;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 

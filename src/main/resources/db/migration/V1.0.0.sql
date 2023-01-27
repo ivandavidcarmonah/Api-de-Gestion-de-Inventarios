@@ -1,3 +1,5 @@
+
+CREATE SCHEMA IF NOT EXISTS `desa_daviddev` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci ;
 CREATE DATABASE  IF NOT EXISTS `desa_daviddev` /*!40100 DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `desa_daviddev`;
 -- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)

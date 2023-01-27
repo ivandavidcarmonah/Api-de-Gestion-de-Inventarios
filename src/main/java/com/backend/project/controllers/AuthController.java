@@ -114,7 +114,7 @@ public class AuthController {
 	}
 	
 	@GetMapping("token-valid")
-	public boolean validarToken(@RequestHeader("Authorization") String authorization){
+	public HttpStatus validarToken(@RequestHeader("Authorization") String authorization){
 		String token;
 		if(StringUtils.hasText(authorization) && authorization.startsWith("Bearer") ) {
 			token = authorization.substring(7, authorization.length());
@@ -122,17 +122,17 @@ public class AuthController {
 			return this.tokenValid(token);
 		}
 		else {
-			return false;
+			return HttpStatus.BAD_REQUEST;
 		}
 		
 	}
 	
-	private boolean tokenValid(String token) {
+	private HttpStatus tokenValid(String token) {
 		
 		try {
 			
 			Jwts.parser().setSigningKey(this.jwtSecret).parseClaimsJws(token);
-			return true;
+			return HttpStatus.ACCEPTED;
 			
 		} 
 		catch (SignatureException e) {

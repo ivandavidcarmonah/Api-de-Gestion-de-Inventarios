@@ -7,8 +7,6 @@ import java.util.Set;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.backend.project.entities.GenderEntity;
-import com.backend.project.entities.LanguageEntity;
 
 public class UserDetailDTO {
 
@@ -47,10 +45,8 @@ public class UserDetailDTO {
 	
 	private long idLanguage;
 
+	private  Set<RolesUserDTO> roles = new HashSet<RolesUserDTO>();
 
-	private Set<Integer> idRoles = new HashSet<Integer>();
-
-	
 
 	public UserDetailDTO(long id, String username, String name, String email, Date birthDate, long numberPhone,
 			String pictureUser, Date modification_date, String password
@@ -72,12 +68,12 @@ public class UserDetailDTO {
 		super();
 	}
  
-	public Set<Integer> getIdRoles() {
-		return idRoles;
+	public Set<RolesUserDTO> getRoles() {
+		return roles;
 	}
 
-	public void setIdRoles(Set<Integer> idRoles) {
-		this.idRoles = idRoles;
+	public void setRoles(Set<RolesUserDTO> roles) {
+		this.roles = roles;
 	}
 
 	public String getPassword() {

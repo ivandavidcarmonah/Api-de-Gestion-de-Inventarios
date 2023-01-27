@@ -1,9 +1,6 @@
 package com.backend.project.DTO.MasterDataDTOs;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 
 public class LanguageDTO {
 	
@@ -11,7 +8,6 @@ public class LanguageDTO {
 	
 	private String name;
 	
-	private String code;
 
 
 	
@@ -20,11 +16,10 @@ public class LanguageDTO {
 		super();
 	}
 
-	public LanguageDTO(long id, String name, String code) {
+	public LanguageDTO(long id, String name ) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.code = code;
 	}
 
 	public long getId() {

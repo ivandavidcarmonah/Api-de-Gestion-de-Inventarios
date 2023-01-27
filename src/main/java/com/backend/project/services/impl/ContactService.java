@@ -20,13 +20,21 @@ public class ContactService {
         this.mailSender = mailSender;
     }
 
-    public void send(String from, String to, String subject, String text) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
-        mailSender.send(message);
+    public boolean send(String from, String to, String subject, String text) {
+    	try {
+	    		
+    		  	SimpleMailMessage message = new SimpleMailMessage();
+    	        message.setFrom(from);
+    	        message.setTo(to, from);
+    	        message.setSubject(subject);
+    	        message.setText(text);
+    	        mailSender.send(message);
+    	        return true;
+		} catch (Exception e) {
+			System.out.print(e);
+			return false;
+		}
+      
     }
 
     public void sendWithAttach(String from, String to, String subject,

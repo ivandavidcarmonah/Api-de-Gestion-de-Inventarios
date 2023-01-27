@@ -2,15 +2,11 @@ package com.backend.project.DTO.UserDTOs;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.backend.project.entities.GenderEntity;
-import com.backend.project.entities.LanguageEntity;
 
 public class RegisterUserDTO {
 	
