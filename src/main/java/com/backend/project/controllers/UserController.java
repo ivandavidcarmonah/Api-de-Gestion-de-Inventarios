@@ -68,10 +68,10 @@ public class UserController {
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
 	@GetMapping("/list-users")
 	public UserResponseDTO getUsers(@Valid
-			@RequestParam(value = AppConstants.NUMBER_PAGE, defaultValue = "0", required = false) int numberPage,
-			@RequestParam(value = AppConstants.SIZE_PAGE, defaultValue = "10", required = false) int pageSize,
-			@RequestParam(value = AppConstants.ORDER_BY, defaultValue = "id", required = false) String orderBy,
-			@RequestParam(value = AppConstants.ORDER_DIR, defaultValue = "asc", required = false) String sortDir) {
+			@RequestParam(name = "numberPage", defaultValue = "0", required = false) int numberPage,
+			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize,
+			@RequestParam(name = "orderBy", defaultValue = "id", required = false) String orderBy,
+			@RequestParam(name = "sortDir", defaultValue = "asc", required = false) String sortDir) {
 
 		return this.userService.getUsers(numberPage, pageSize, orderBy, sortDir);
 	}
