@@ -7,6 +7,7 @@ import java.util.Collections;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -94,8 +98,10 @@ public class UserController {
 		userEntity.setUsername(registerUserDTO.getUsername());
 		userEntity.setNumberPhone(registerUserDTO.getNumberPhone());
 
-		userEntity.setLanguage(this.languageRepository.getById(registerUserDTO.getIdLanguage()));
-		userEntity.setGender(this.genderRepository.getById(registerUserDTO.getIdGender()));
+		//userEntity.setLanguage(this.languageRepository.getById(registerUserDTO.getIdLanguage()));
+		userEntity.setLanguage(this.languageRepository.getById((long) 2));
+		//userEntity.setGender(this.genderRepository.getById(registerUserDTO.getIdGender()));
+		userEntity.setGender(this.genderRepository.getById((long) 2));
 
 	
 		userEntity.setPassword(this.passwordEncoder.encode(registerUserDTO.getUsername()));
@@ -104,9 +110,14 @@ public class UserController {
 
 		RolesEntity rolesEntity = this.rolesRepository.findByName("ROLE_ADMIN").get();
 		userEntity.setRoles(Collections.singleton(rolesEntity));
+		UserDetailDTO userInser = this.mapUserDetailDTO(userEntity);
+		return new ResponseEntity<>(userInser, HttpStatus.CREATED);
 		
-		return new ResponseEntity<>("AUTH.REGISTER.REGISTER_USER_OK", HttpStatus.CREATED);
-		
+	}
+	
+	private UserDetailDTO mapUserDetailDTO(UserEntity user) {
+		UserDetailDTO userDetailDTO = this.modelMapper.map(user, UserDetailDTO.class);
+		return userDetailDTO;
 	}
 	
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
