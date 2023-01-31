@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }),
 		@UniqueConstraint(columnNames = { "email" }) })
@@ -49,6 +51,7 @@ public class UserEntity  extends AuditModel{
 	private Set<RolesEntity> roles = new HashSet<RolesEntity>();
 
 	@Column(name = "birthDate")
+	@JsonFormat(pattern = "yyyy/dd/MM")
 	private Date birthDate;
 
 	@Column(name = "numberPhone", nullable = true)

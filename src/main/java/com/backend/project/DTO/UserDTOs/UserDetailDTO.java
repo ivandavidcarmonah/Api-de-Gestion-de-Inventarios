@@ -1,6 +1,7 @@
 package com.backend.project.DTO.UserDTOs;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.Size;
 
 import com.backend.project.DTO.MasterDataDTOs.GenderDTO;
 import com.backend.project.DTO.MasterDataDTOs.LanguageDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 public class UserDetailDTO {
@@ -27,6 +29,7 @@ public class UserDetailDTO {
 	@Size(min = 5, message="USERS.ERROR.EMAIL")
 	private String email;
 	
+	@JsonFormat(pattern = "yyyy/dd/MM")
 	private Date birthDate;
 	
 	@NotEmpty
@@ -123,7 +126,7 @@ public class UserDetailDTO {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 
