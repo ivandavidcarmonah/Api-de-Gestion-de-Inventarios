@@ -4,6 +4,7 @@ package com.backend.project.services;
 import com.backend.project.DTO.UserDTOs.UserDTO;
 import com.backend.project.DTO.UserDTOs.UserDetailDTO;
 import com.backend.project.DTO.UserDTOs.UserResponseDTO;
+import com.backend.project.DTO.UserDTOs.UserUpdateDTO;
 
 public interface UserService {
 
@@ -14,7 +15,7 @@ public interface UserService {
 //
 	public UserDetailDTO getUserById(long id);
 //
-	public UserDetailDTO updateUser(UserDetailDTO reqDto, long id);
+	public UserDetailDTO updateUser(UserUpdateDTO reqDto, long id);
 //
 	public void deleteUser(long id);
 

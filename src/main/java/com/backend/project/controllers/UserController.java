@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.backend.project.DTO.UserDTOs.RegisterUserDTO;
 import com.backend.project.DTO.UserDTOs.UserDetailDTO;
 import com.backend.project.DTO.UserDTOs.UserResponseDTO;
+import com.backend.project.DTO.UserDTOs.UserUpdateDTO;
 import com.backend.project.entities.RolesEntity;
 import com.backend.project.entities.UserEntity;
 import com.backend.project.repositories.GenderRepository;
@@ -84,7 +85,7 @@ public class UserController {
 
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
 	@PostMapping("/new-user")
-	public ResponseEntity<?> editUser(@RequestBody RegisterUserDTO registerUserDTO){
+	public ResponseEntity<?> editUser(@Valid @RequestBody RegisterUserDTO registerUserDTO){
 		if(this.userRepository.existsByUsername(registerUserDTO.getUsername())) {
 			return new ResponseEntity<>("AUTH.ERROR.REGISTER_USERNAME_EXISTS", HttpStatus.BAD_REQUEST);
 		}
@@ -122,7 +123,7 @@ public class UserController {
 	
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
 	@PutMapping("/update-user")
-	public ResponseEntity<UserDetailDTO> updateUser(@RequestBody UserDetailDTO updateUserDto){
+	public ResponseEntity<UserDetailDTO> updateUser(@Valid @RequestBody UserUpdateDTO updateUserDto){
 		UserDetailDTO detailDTO = this.userService.updateUser(updateUserDto, updateUserDto.getId());
 
 		return new ResponseEntity<>(detailDTO, HttpStatus.OK);

@@ -18,6 +18,7 @@ import com.backend.project.DTO.UserDTOs.RolesUserDTO;
 import com.backend.project.DTO.UserDTOs.UserDTO;
 import com.backend.project.DTO.UserDTOs.UserDetailDTO;
 import com.backend.project.DTO.UserDTOs.UserResponseDTO;
+import com.backend.project.DTO.UserDTOs.UserUpdateDTO;
 import com.backend.project.entities.RolesEntity;
 import com.backend.project.entities.UserEntity;
 import com.backend.project.exceptions.ResourceNotFoundException;
@@ -81,7 +82,7 @@ public class UserServiceImp implements UserService {
 	
 	
 	@Override
-	public UserDetailDTO updateUser(UserDetailDTO reqDto, long id) {
+	public UserDetailDTO updateUser(UserUpdateDTO reqDto, long id) {
 		UserEntity user = this.userRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Users", "id", id));
 
@@ -143,7 +144,7 @@ public class UserServiceImp implements UserService {
 	 * @return UserEntity
 	 */
 	@SuppressWarnings("unused")
-	private UserEntity mapEntitie(UserDTO dto) {
+	private UserEntity mapEntitie(UserUpdateDTO dto) {
 		UserEntity entity = this.modelMapper.map(dto, UserEntity.class);
 		return entity;
 	}

@@ -12,7 +12,7 @@ import com.backend.project.DTO.MasterDataDTOs.LanguageDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
-public class UserDetailDTO {
+public class UserUpdateDTO {
 
 	private long id;
 	
@@ -32,26 +32,18 @@ public class UserDetailDTO {
 	private Date birthDate;
 	
 	private long numberPhone;
-	
-	
-	@NotEmpty
-	@Size(min = 6, message="USERS.ERROR.PASSWORD")
-	private String password;
-	
-	
+		
 	private String pictureUser;
 	
-	private Date modification_date;
-	
-
 	private GenderDTO gender;
 	
 	private LanguageDTO language;
 
+	@NotEmpty(message = "ROL.ERROR.OBLIGATORIO")
 	private  Set<RolesUserDTO> roles = new HashSet<RolesUserDTO>();
 
 
-	public UserDetailDTO(long id, String username, String name, String email, Date birthDate, long numberPhone,
+	public UserUpdateDTO(long id, String username, String name, String email, Date birthDate, long numberPhone,
 			String pictureUser, Date modification_date, String password
 			) {
 		super();
@@ -62,12 +54,10 @@ public class UserDetailDTO {
 		this.birthDate = birthDate;
 		this.numberPhone = numberPhone;
 		this.pictureUser = pictureUser;
-		this.modification_date = modification_date;
 		
-		this.password = password;
 	}
 
-	public UserDetailDTO() {
+	public UserUpdateDTO() {
 		super();
 	}
  
@@ -79,14 +69,7 @@ public class UserDetailDTO {
 		this.roles = roles;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
+	
 	public long getId() {
 		return id;
 	}
@@ -141,14 +124,6 @@ public class UserDetailDTO {
 
 	public void setPictureUser(String pictureUser) {
 		this.pictureUser = pictureUser;
-	}
-
-	public Date getModification_date() {
-		return modification_date;
-	}
-
-	public void setModification_date(Date modification_date) {
-		this.modification_date = modification_date;
 	}
 
 	public GenderDTO getGender() {
