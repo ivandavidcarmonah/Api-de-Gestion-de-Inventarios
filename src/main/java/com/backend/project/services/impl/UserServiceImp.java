@@ -96,9 +96,9 @@ public class UserServiceImp implements UserService {
 		user.setBirthDate(userUpdate.getBirthDate());
 		user.setRoles(userUpdate.getRoles());
 		
-		/**if (user.getLanguage().getId() != userUpdate.getLanguage().getId()) {
+		if (user.getLanguage().getId() != userUpdate.getLanguage().getId()) {
 			user.setLanguage(userUpdate.getLanguage());
-		}**/
+		}
 		if (user.getGender().getId() != userUpdate.getGender().getId()) {
 			user.setGender(userUpdate.getGender());
 		}
