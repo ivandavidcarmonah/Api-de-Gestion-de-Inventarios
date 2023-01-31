@@ -57,17 +57,17 @@ public class UserEntity  extends AuditModel{
 	@Column(name = "pictureUser", nullable = true)
 	private String pictureUser;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(referencedColumnName = "id")
 	private GenderEntity gender;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(referencedColumnName = "id")
 	private LanguageEntity language;
 
 	public UserEntity(long id, String username, String name, String email, String password,
-			Date birthDate, long numberPhone, String pictureUser, GenderEntity gender,
-			LanguageEntity language) {
+			Date birthDate, long numberPhone, String pictureUser
+			) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -78,8 +78,6 @@ public class UserEntity  extends AuditModel{
 		this.numberPhone = numberPhone;
 		this.pictureUser = pictureUser;
 		
-		this.gender = gender;
-		this.language = language;
 	}
 
 	public UserEntity() {

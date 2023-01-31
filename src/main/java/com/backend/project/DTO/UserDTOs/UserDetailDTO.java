@@ -7,6 +7,9 @@ import java.util.Set;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.backend.project.DTO.MasterDataDTOs.GenderDTO;
+import com.backend.project.DTO.MasterDataDTOs.LanguageDTO;
+
 
 public class UserDetailDTO {
 
@@ -41,9 +44,9 @@ public class UserDetailDTO {
 	private Date modification_date;
 	
 
-	private long idGender;
+	private GenderDTO gender;
 	
-	private long idLanguage;
+	private LanguageDTO language;
 
 	private  Set<RolesUserDTO> roles = new HashSet<RolesUserDTO>();
 
@@ -148,21 +151,23 @@ public class UserDetailDTO {
 		this.modification_date = modification_date;
 	}
 
-	public long getIdGender() {
-		return idGender;
+	public GenderDTO getGender() {
+		return gender;
 	}
 
-	public void setIdGender(long idGender) {
-		this.idGender = idGender;
+	public void setGender(GenderDTO idGender) {
+		this.gender = idGender;
 	}
 
-	public long getIdLanguage() {
-		return idLanguage;
+	public LanguageDTO getLanguage() {
+		return language;
 	}
 
-	public void setIdLanguage(long idLanguage) {
-		this.idLanguage = idLanguage;
+	public void setLanguage(LanguageDTO idLanguage) {
+		this.language = idLanguage;
 	}
+
+	
 
 
 }

@@ -1,6 +1,7 @@
 package com.backend.project.services.impl;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,21 +31,8 @@ public class UserServiceImp implements UserService {
 	private ModelMapper modelMapper;
 	
 
-//	@Autowired
-//	private GenderRepository genderRepository;
-//
-//	@Autowired
-//	private LanguageRepository languageRepository;
-	
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Override
-	public UserDTO createUser(UserDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 
 	@Override
@@ -97,7 +85,6 @@ public class UserServiceImp implements UserService {
 		UserEntity user = this.userRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Users", "id", id));
 
-		@SuppressWarnings("unused")
 		UserEntity userUpdate = new UserEntity();
 		userUpdate = this.mapEntitie(reqDto);
 		
@@ -108,18 +95,15 @@ public class UserServiceImp implements UserService {
 		user.setNumberPhone(userUpdate.getNumberPhone());
 		user.setBirthDate(userUpdate.getBirthDate());
 		user.setRoles(userUpdate.getRoles());
-//		if (user.getLanguage().getId() != reqDto.getIdLanguage()) {
-//			user.setLanguage(this.languageRepository.getById(reqDto.getIdLanguage()));
-//		}
-//		if (user.getGender().getId() != userUpdate.getGender().getId()) {
-//			user.setGender(this.genderRepository.getById(reqDto.getIdGender()));
-//		}
-	
-		//Para almacenar la fecha en BD se necesitan en milisegundos
-		long miliseconds = System.currentTimeMillis(); //Fecha en milisegundos Actual del sistema
-        @SuppressWarnings("unused")
-		Date date = new Date(miliseconds);
 		
+		/**if (user.getLanguage().getId() != userUpdate.getLanguage().getId()) {
+			user.setLanguage(userUpdate.getLanguage());
+		}**/
+		if (user.getGender().getId() != userUpdate.getGender().getId()) {
+			user.setGender(userUpdate.getGender());
+		}
+		
+		user.setUpdate_date(LocalDateTime.now());
 		
         UserEntity update = this.userRepository.save(user);
 

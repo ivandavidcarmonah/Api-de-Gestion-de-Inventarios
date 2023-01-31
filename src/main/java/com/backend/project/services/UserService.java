@@ -7,7 +7,6 @@ import com.backend.project.DTO.UserDTOs.UserResponseDTO;
 
 public interface UserService {
 
-	public UserDTO createUser(UserDTO dto);
 	
 	public UserResponseDTO getUsers(int numberPage, int pageSize, String orderBy, String sortDir);
 
