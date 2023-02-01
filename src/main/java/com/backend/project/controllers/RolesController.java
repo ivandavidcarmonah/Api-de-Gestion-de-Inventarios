@@ -27,7 +27,7 @@ public class RolesController {
 	private RolesService rolesService;
 	
 	
-	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
+	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR') or hasRole('ROLE_VISITANTE')")
 	@GetMapping("/list-roles")
 	public List<RolesUserDTO> getRoles() {
 

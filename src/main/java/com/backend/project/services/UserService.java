@@ -11,7 +11,7 @@ public interface UserService {
 	
 	public UserResponseDTO getUsers(int numberPage, int pageSize, String orderBy, String sortDir);
 
-//	public PublicationResponseDTO getPublications(int numberPage, int pageSize, String orderBy, String sortDir);
+	public UserDetailDTO insertUser(UserUpdateDTO reqDto);
 //
 	public UserDetailDTO getUserById(long id);
 //

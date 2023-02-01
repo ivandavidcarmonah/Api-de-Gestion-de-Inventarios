@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.backend.project.DTO.UserDTOs.RolesUserDTO;
@@ -35,6 +36,8 @@ public class UserServiceImp implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDetailDTO getUserById(long id) {
@@ -110,6 +113,36 @@ public class UserServiceImp implements UserService {
 
 		return mapUserDetailDTO(update);
 	}
+	
+	
+	@Override
+	public UserDetailDTO insertUser(UserUpdateDTO reqDto) {
+		
+		UserEntity user = new UserEntity();
+		user = this.mapEntitie(reqDto);
+		user.setUpdate_date(LocalDateTime.now());
+		user.setCreation_date(LocalDateTime.now());
+		user.setPassword(this.passwordEncoder.encode(reqDto.getUsername()));
+		
+        UserEntity update = this.userRepository.save(user);
+
+		return mapUserDetailDTO(update);
+	}
+	
+
+	@Override
+	public void deleteUser(long id) {
+		// TODO Auto-generated method stub
+		UserEntity entitie = this.userRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Publications", "id", id));
+		this.userRepository.delete(entitie);
+	}
+
+	
+	
+	
+	
+	
 	/**
 	 * Mapear desde un DTO -> Entidad
 	 * 
@@ -166,15 +199,6 @@ public class UserServiceImp implements UserService {
 		return rol;
 	}
 
-
-
-	@Override
-	public void deleteUser(long id) {
-		// TODO Auto-generated method stub
-		UserEntity entitie = this.userRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Publications", "id", id));
-		this.userRepository.delete(entitie);
-	}
 
 
 }
