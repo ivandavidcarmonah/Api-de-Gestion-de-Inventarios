@@ -7,14 +7,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.project.DTO.ProductDTOs.ProductDTO;
 import com.backend.project.DTO.ProductDTOs.ProductResponseDTO;
 import com.backend.project.DTO.ProductDTOs.RegisterProductDTO;
 import com.backend.project.repositories.ProductRepository;
@@ -35,7 +39,7 @@ public class ProductController {
 	private ProductRepository productRepository;
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping("/create-update")
+	@PostMapping("/create-product")
 	public ResponseEntity<?> newProducto(@Valid @RequestBody RegisterProductDTO productoDTO){
 		if(this.productRepository.existsByName(productoDTO.getName())) {
 			return new ResponseEntity<>("PRODUCT.ERROR.REGISTER_NAME_EXISTS", HttpStatus.BAD_REQUEST);
@@ -53,6 +57,24 @@ public class ProductController {
 			@RequestParam(name = "sortDir", defaultValue = "des", required = false) String sortDir) {
 
 		return this.productService.getAllProducts(numberPage, pageSize, orderBy, sortDir);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
+	@PutMapping("/update-product")
+	public ResponseEntity<ProductDTO> updateUser(@Valid @RequestBody ProductDTO dto){
+		
+		ProductDTO resDto = this.productService.updateProduct(dto);
+
+		return new ResponseEntity<>(resDto, HttpStatus.OK);
+		
+	}
+	
+	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
+	@DeleteMapping("/delete-product/{id}")
+	public ResponseEntity<String> deleteUser(@PathVariable(name = "id") long id) {
+		this.productService.delete(id);
+		return new ResponseEntity<>("BORRADO.CORRECTO", HttpStatus.OK);
+
 	}
 	
 

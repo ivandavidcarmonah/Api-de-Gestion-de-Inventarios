@@ -1,5 +1,6 @@
 package com.backend.project.services.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +39,6 @@ public class ProductServiceImp implements ProductService {
 
 	@Override
 	public ProductResponseDTO getAllProducts(int numberPage, int pageSize, String orderBy, String sortDir) {
-		// TODO Auto-generated method stub
 				Sort sort = sortDir.equalsIgnoreCase( Sort.Direction.ASC.name()) ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending(); 
 				Pageable pageable = PageRequest.of(numberPage, pageSize, sort);
 				Page<ProductEntity> products = this.productRepository.findAll(pageable);
@@ -61,25 +61,17 @@ public class ProductServiceImp implements ProductService {
 	}
 	
 	
-
-
 	/**
 	 * Metodo para crear un producto si el idProduct es 0 o actualizarlo si es != de 0
 	 */
 	public ProductDTO createUpdateProducto(RegisterProductDTO dto) {
-		if(dto.getIdProduct() != 0){
-			dto.setModDate(new Date());
-		}
-		else {
-			dto.setCreaDate(new Date());
-			dto.setModDate(new Date());
-		}
+		dto.setCreaDate(new Date());
+		dto.setModDate(new Date());
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserEntity user = this.userRepository.findByEmail(principal).orElseThrow(() -> new ResourceNotFoundException("Users", "email", principal));
 		ProductEntity entity = new ProductEntity();
 		entity = this.mapDTO(dto);
 		entity.setUser(user);
-		
 		ProductDTO resDtp = this.mapEntitie(this.productRepository.save(entity)); 
 			
 		return resDtp;
@@ -112,7 +104,6 @@ public class ProductServiceImp implements ProductService {
 
 	@Override
 	public ProductDTO getProductId(long id) {
-		// TODO Auto-generated method stub
 		 
 		ProductEntity productEntity = this.productRepository.findById(id)
 	    		 .orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
@@ -122,7 +113,35 @@ public class ProductServiceImp implements ProductService {
 		return dto;
 	}
 
-	
+
+	@Override
+	public ProductDTO updateProduct(ProductDTO dto) {
+		ProductEntity productEntity = this.productRepository.findById(dto.getIdProduct())
+	    		 .orElseThrow(() -> new ResourceNotFoundException("Product", "id", dto.getIdProduct()));
+		
+		productEntity.setAllergies(dto.getAllergies());
+		productEntity.setName(dto.getName());
+		productEntity.setPrice(dto.getPrice());
+		productEntity.setValid(dto.isValid());
+		productEntity.setDescription(dto.getDescription());
+
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		productEntity.setUpdate_by(principal);
+		productEntity.setUpdate_date(LocalDateTime.now());
+
+		ProductEntity update = this.productRepository.save(productEntity);
+
+		
+		return this.mapEntitie(update);
+	}
+
+	@Override
+	public void delete(long id) {
+		ProductEntity entitie = this.productRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
+		this.productRepository.delete(entitie);		
+	}
 
 
 	/**
@@ -159,5 +178,8 @@ public class ProductServiceImp implements ProductService {
 	private ProductEntity mapDTO(RegisterProductDTO dto) {
 		return this.modelMapper.map(dto, ProductEntity.class);
 	}
+
+
+
 
 }

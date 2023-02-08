@@ -9,6 +9,9 @@ import com.backend.project.DTO.UserDTOs.UserResponseDTO;
 public interface ProductService {
 
 	public ProductDTO createUpdateProducto(RegisterProductDTO dto);
+	
+	public ProductDTO updateProduct(ProductDTO dto);
+
 	public void deleteProduct(long idProdcut);
 	public ProductResponseDTO getAllProducts();
 	
@@ -16,5 +19,7 @@ public interface ProductService {
 
 	
 	public ProductDTO getProductId(long id);
+
+	public void delete(long id);
 
 }

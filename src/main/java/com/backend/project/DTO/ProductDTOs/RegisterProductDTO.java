@@ -14,7 +14,6 @@ import com.backend.project.DTO.UserDTOs.UserDTO;
 
 public class RegisterProductDTO {	
 	
-	private long idProduct;
 
 	@NotEmpty
 	@Size(min = 3, message="PRODUCT.ERROR.TITULO_PRODUCT")
@@ -51,13 +50,12 @@ public class RegisterProductDTO {
 		super();
 	}
 
-	public RegisterProductDTO(long idProduct, @NotEmpty @Size(min = 3, message = "PRODUCT.ERROR.TITULO_PRODUCT") String name,
+	public RegisterProductDTO( @NotEmpty @Size(min = 3, message = "PRODUCT.ERROR.TITULO_PRODUCT") String name,
 			String description, @NotEmpty String preparesin, String allergies,
 			@NotEmpty @Size(min = 1, message = "PRODUCT.ERROR.PRICE_PRODUCT") double price, boolean isValid,
 			boolean isSpent, String picture, TypesProductDTO typeProduct, CompanyDTO company, Date creaDate,
 			Date modDate, long creaUser, long modUser) {
 		super();
-		this.idProduct = idProduct;
 		this.name = name;
 		this.description = description;
 		this.preparesin = preparesin;
@@ -75,13 +73,7 @@ public class RegisterProductDTO {
 	}
 	
 	
-	public long getIdProduct() {
-		return idProduct;
-	}
-
-	public void setIdProduct(long idProduct) {
-		this.idProduct = idProduct;
-	}
+	
 
 	public String getName() {
 		return name;
