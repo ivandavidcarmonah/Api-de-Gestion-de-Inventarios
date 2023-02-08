@@ -27,7 +27,7 @@ import com.backend.project.services.ProductService;
 
 @RestController 
 @RequestMapping( "/api/product")
-@CrossOrigin(origins = "*", methods= {RequestMethod.POST, RequestMethod.GET})
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class ProductController {
 
 	
@@ -39,7 +39,7 @@ public class ProductController {
 	private ProductRepository productRepository;
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping("/create-product")
+	@PostMapping("/new-product")
 	public ResponseEntity<?> newProducto(@Valid @RequestBody RegisterProductDTO productoDTO){
 		if(this.productRepository.existsByName(productoDTO.getName())) {
 			return new ResponseEntity<>("PRODUCT.ERROR.REGISTER_NAME_EXISTS", HttpStatus.BAD_REQUEST);
@@ -49,7 +49,7 @@ public class ProductController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR') or hasRole('ROLE_VISITANTE')")
-	@GetMapping("/list")
+	@GetMapping("/list-products")
 	public ProductResponseDTO getUsers(@Valid
 			@RequestParam(name = "numberPage", defaultValue = "0", required = false) int numberPage,
 			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize,
@@ -70,7 +70,7 @@ public class ProductController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
-	@DeleteMapping("/delete-product/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteUser(@PathVariable(name = "id") long id) {
 		this.productService.delete(id);
 		return new ResponseEntity<>("BORRADO.CORRECTO", HttpStatus.OK);
