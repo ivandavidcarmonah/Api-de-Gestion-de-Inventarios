@@ -78,10 +78,10 @@
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org./flyway-core -->
-		<dependency>
+		<!--<dependency>
 		    <groupId>org.flywaydb</groupId>
 		    <artifactId>flyway-core</artifactId>
-		</dependency>
+		</dependency>-->
 		
 		<dependency>
 		    <groupId>commons-fileupload</groupId>

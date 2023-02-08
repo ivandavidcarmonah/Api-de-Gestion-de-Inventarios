@@ -176,7 +176,6 @@ public class UserServiceImp implements UserService {
 	 * @param UserDTO
 	 * @return UserEntity
 	 */
-	@SuppressWarnings("unused")
 	private UserEntity mapEntitie(UserUpdateDTO dto) {
 		UserEntity entity = this.modelMapper.map(dto, UserEntity.class);
 		return entity;

@@ -12,7 +12,7 @@ import com.backend.project.DTO.Company.CompanyDTO;
 import com.backend.project.DTO.UserDTOs.RolesUserDTO;
 import com.backend.project.DTO.UserDTOs.UserDTO;
 
-public class ProductDTO {	
+public class RegisterProductDTO {	
 	
 	private long idProduct;
 
@@ -47,13 +47,11 @@ public class ProductDTO {
 	
 	private long modUser;
 	
-	private UserDTO user = new UserDTO();
- 
-	public ProductDTO() {
+	public RegisterProductDTO() {
 		super();
 	}
 
-	public ProductDTO(long idProduct, @NotEmpty @Size(min = 3, message = "PRODUCT.ERROR.TITULO_PRODUCT") String name,
+	public RegisterProductDTO(long idProduct, @NotEmpty @Size(min = 3, message = "PRODUCT.ERROR.TITULO_PRODUCT") String name,
 			String description, @NotEmpty String preparesin, String allergies,
 			@NotEmpty @Size(min = 1, message = "PRODUCT.ERROR.PRICE_PRODUCT") double price, boolean isValid,
 			boolean isSpent, String picture, TypesProductDTO typeProduct, CompanyDTO company, Date creaDate,
@@ -76,15 +74,7 @@ public class ProductDTO {
 		this.modUser = modUser;
 	}
 	
-	public UserDTO getUser() {
-		return user;
-	}
-
-	public void setUser(UserDTO user) {
-		this.user = user;
-	}
-
-
+	
 	public long getIdProduct() {
 		return idProduct;
 	}

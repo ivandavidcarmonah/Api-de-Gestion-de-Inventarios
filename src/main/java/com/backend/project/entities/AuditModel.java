@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author idcarmona
  *
  */
-
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(
@@ -30,19 +29,19 @@ public class AuditModel implements Serializable {
 	
 	public static final long serialVersionUID = 1L;
 	
-	@Column(name ="creation_date", nullable = false, updatable = true, columnDefinition = "TIMESTAMP")
+	@Column(name ="creation_date", nullable = true, updatable = true, columnDefinition = "TIMESTAMP")
 	@CreatedDate
 	private LocalDateTime  creation_date;
 	
-	@Column(name ="created_by", nullable = false, updatable = true)
+	@Column(name ="created_by", nullable = true, updatable = true)
 	@CreatedBy
 	private String created_by;
 	
-	@Column(name ="update_date", nullable = false, columnDefinition = "TIMESTAMP")
+	@Column(name ="update_date", nullable = true, columnDefinition = "TIMESTAMP")
 	@LastModifiedDate
 	private LocalDateTime update_date;
 	
-	@Column(name ="update_by", nullable = false)
+	@Column(name ="update_by", nullable = true)
 	@LastModifiedBy
 	private String  update_by;
 	

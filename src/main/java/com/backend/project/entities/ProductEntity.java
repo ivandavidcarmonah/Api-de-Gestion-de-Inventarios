@@ -1,6 +1,7 @@
 package com.backend.project.entities;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,17 +11,29 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+/**
+ * @author IvanDavidCarmona
+ *
+ */
 @Entity
-@Table(name = "product")
-public class ProductEntity {
+@Table(name = "product", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+public class ProductEntity extends AuditModel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idProduct;
+	private long id;
+
 
 	@Column(nullable = false)
-	private String title;
+	private String name;
 
 	@Column(nullable = true)
 	private String description;
@@ -32,14 +45,11 @@ public class ProductEntity {
 	private String allergies;
 
 	@Column(nullable = false)
-	private String price;
+	private double price;
 
 	@Column(nullable = false)
 	private boolean isValid;
 	
-	@ManyToOne
-	@JoinColumn(name = "idTypesProducts")
-	private TypesProductEntity typeProduct;
 	
 	@Column(nullable = true)
 	private String picture;
@@ -47,61 +57,44 @@ public class ProductEntity {
 	@Column(nullable = false)
 	private boolean isSpent;
 
+	
 	@ManyToOne
-	@JoinColumn(name = "idCompany")
-	private CompanyEntity company;
-	
-	@Column(name = "crea_date")
-	private Date creaDate;
-	
-	@Column(name = "mod_date", nullable = true)
-	private Date modDate;	
+	private UserEntity user;
 
-	@Column(name = "crea_user")
-	private long creaUser;
-	
-	@Column(name = "mod_user", nullable = true)
-	private long modUser;
 
-	public ProductEntity(long idProduct, String title, String description, String preparesin, String allergies,
-			String price, boolean isValid, TypesProductEntity typeProduct, String picture, boolean isSpent,
-			CompanyEntity company, Date creaDate, Date modDate, long creaUser, long modUser) {
-		super();
-		this.idProduct = idProduct;
-		this.title = title;
+	public ProductEntity(LocalDateTime creation_date, String created_by, LocalDateTime update_date, String update_by,
+			Boolean deleted, LocalDateTime deleted_date, String deleted_by, long id, String name, String description,
+			String preparesin, String allergies, double price, boolean isValid, String picture, boolean isSpent,
+			UserEntity user) {
+		super(creation_date, created_by, update_date, update_by, deleted, deleted_date, deleted_by);
+		this.id = id;
+		this.name = name;
 		this.description = description;
 		this.preparesin = preparesin;
 		this.allergies = allergies;
 		this.price = price;
 		this.isValid = isValid;
-		this.typeProduct = typeProduct;
 		this.picture = picture;
 		this.isSpent = isSpent;
-		this.company = company;
-		this.creaDate = creaDate;
-		this.modDate = modDate;
-		this.creaUser = creaUser;
-		this.modUser = modUser;
+		this.user = user;
+	}
+	
+	public ProductEntity() {}
+
+	public long getId() {
+		return id;
 	}
 
-	public ProductEntity() {
-		super();
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public long getIdProduct() {
-		return idProduct;
+	public String getName() {
+		return name;
 	}
 
-	public void setIdProduct(long idProduct) {
-		this.idProduct = idProduct;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getDescription() {
@@ -128,11 +121,11 @@ public class ProductEntity {
 		this.allergies = allergies;
 	}
 
-	public String getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -142,14 +135,6 @@ public class ProductEntity {
 
 	public void setValid(boolean isValid) {
 		this.isValid = isValid;
-	}
-
-	public TypesProductEntity getTypeProduct() {
-		return typeProduct;
-	}
-
-	public void setTypeProduct(TypesProductEntity typeProduct) {
-		this.typeProduct = typeProduct;
 	}
 
 	public String getPicture() {
@@ -168,44 +153,16 @@ public class ProductEntity {
 		this.isSpent = isSpent;
 	}
 
-	public CompanyEntity getCompany() {
-		return company;
+	public UserEntity getUser() {
+		return user;
 	}
 
-	public void setCompany(CompanyEntity company) {
-		this.company = company;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 
-	public Date getCreaDate() {
-		return creaDate;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public void setCreaDate(Date creaDate) {
-		this.creaDate = creaDate;
-	}
-
-	public Date getModDate() {
-		return modDate;
-	}
-
-	public void setModDate(Date modDate) {
-		this.modDate = modDate;
-	}
-
-	public long getCreaUser() {
-		return creaUser;
-	}
-
-	public void setCreaUser(long creaUser) {
-		this.creaUser = creaUser;
-	}
-
-	public long getModUser() {
-		return modUser;
-	}
-
-	public void setModUser(long modUser) {
-		this.modUser = modUser;
-	}
-	
 }

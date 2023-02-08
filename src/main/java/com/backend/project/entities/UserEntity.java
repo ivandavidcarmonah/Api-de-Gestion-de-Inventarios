@@ -2,6 +2,7 @@ package com.backend.project.entities;
 
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -68,6 +70,12 @@ public class UserEntity  extends AuditModel{
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(referencedColumnName = "id")
 	private LanguageEntity language;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<ProductEntity> products;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<SaleEntity> sales;
 
 	public UserEntity(long id, String username, String name, String email, String password,
 			Date birthDate, long numberPhone, String pictureUser
