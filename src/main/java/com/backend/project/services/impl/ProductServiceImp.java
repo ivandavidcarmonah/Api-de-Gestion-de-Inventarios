@@ -1,5 +1,6 @@
 package com.backend.project.services.impl;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,12 +19,15 @@ import org.springframework.stereotype.Service;
 import com.backend.project.DTO.ProductDTOs.ProductDTO;
 import com.backend.project.DTO.ProductDTOs.ProductResponseDTO;
 import com.backend.project.DTO.ProductDTOs.RegisterProductDTO;
+import com.backend.project.DTO.UserDTOs.UserDetailDTO;
+import com.backend.project.entities.DeveloperBlogEntity;
 import com.backend.project.entities.ProductEntity;
 import com.backend.project.entities.UserEntity;
 import com.backend.project.exceptions.ResourceNotFoundException;
 import com.backend.project.repositories.ProductRepository;
 import com.backend.project.repositories.UserRepository;
 import com.backend.project.services.ProductService;
+import com.backend.project.utils.AppConstants;
 
 @Service
 public class ProductServiceImp implements ProductService {
@@ -136,6 +140,19 @@ public class ProductServiceImp implements ProductService {
 		return this.mapEntitie(update);
 	}
 
+
+	@Override
+	public ProductDTO getById(long id) {
+		ProductEntity entity = this.productRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
+
+		ProductDTO detailDTO = new ProductDTO();
+		detailDTO =  mapEntitie(entity);
+		
+		return detailDTO;
+	}
+
+	
 	@Override
 	public void delete(long id) {
 		ProductEntity entitie = this.productRepository.findById(id)
@@ -144,6 +161,30 @@ public class ProductServiceImp implements ProductService {
 	}
 
 
+	@Override
+	public ProductDTO updateImagenProduct(String fileName, long id) {
+		ProductEntity element = this.productRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Publications", "id", id));
+
+		/**
+		 * Eliminar imagen si existe
+		 */
+		if (element.getPicture() != null) {
+			File fichero = new File(AppConstants.PRODUCT_IMAGE_DIR + element.getPicture());
+			if (fichero.delete())
+				   System.out.println("El fichero ha sido borrado satisfactoriamente");
+				else
+				   System.out.println("El fichero no puede ser borrado");
+		}
+		element.setUpdate_date(LocalDateTime.now());
+		element.setPicture(fileName);
+		ProductEntity elementEntity = this.productRepository.save(element);
+
+		return mapEntitie(elementEntity);
+		
+	}
+
+	
 	/**
 	 * Mapear desde un Entity -> DTO
 	 * 
@@ -178,6 +219,9 @@ public class ProductServiceImp implements ProductService {
 	private ProductEntity mapDTO(RegisterProductDTO dto) {
 		return this.modelMapper.map(dto, ProductEntity.class);
 	}
+
+
+
 
 
 

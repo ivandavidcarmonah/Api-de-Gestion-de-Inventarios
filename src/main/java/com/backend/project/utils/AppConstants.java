@@ -19,6 +19,7 @@ public class AppConstants {
     
     //rutas de ficheros
     public static final String DEVELOPER_BLOG_DIR="images/developer/";
+    public static final String PRODUCT_IMAGE_DIR="images/produt/";
 
 	
 }

@@ -1,11 +1,18 @@
 package com.backend.project.controllers;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.validation.Valid;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +24,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.backend.project.DTO.ProductDTOs.ProductDTO;
 import com.backend.project.DTO.ProductDTOs.ProductResponseDTO;
 import com.backend.project.DTO.ProductDTOs.RegisterProductDTO;
 import com.backend.project.repositories.ProductRepository;
 import com.backend.project.services.ProductService;
+import com.backend.project.utils.AppConstants;
+import com.backend.project.utils.FileUploadUtil;
 
 
 @RestController 
@@ -69,6 +79,13 @@ public class ProductController {
 		
 	}
 	
+	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR') or hasRole('ROLE_VISITANTE')")
+	@GetMapping("/product/{id}")
+	public ResponseEntity<ProductDTO> getById(@PathVariable(name = "id") long id) {
+		return ResponseEntity.ok( this.productService.getById(id));
+	}
+	
+	
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteUser(@PathVariable(name = "id") long id) {
@@ -76,6 +93,29 @@ public class ProductController {
 		return new ResponseEntity<>("BORRADO.CORRECTO", HttpStatus.OK);
 
 	}
+	
+	@GetMapping("/get-file/{filename}")
+    public ResponseEntity<byte[]> getImage(@PathVariable("filename") String filename) {
+        byte[] image = new byte[0];
+        try {
+            image = FileUtils.readFileToByteArray(new File(AppConstants.PRODUCT_IMAGE_DIR + filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+    }
+    
+	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
+    @PostMapping("/save-file/{id}")
+    public ResponseEntity<byte[]> saveFile(@PathVariable("id") long id, @RequestParam("file") MultipartFile multipartFile) throws IOException {
+    	String fileName = FileUploadUtil.cadenaAleatoria(30).toUpperCase().concat(".").concat(FilenameUtils.getExtension(StringUtils.cleanPath(multipartFile.getOriginalFilename())));
+        String uploadDir = AppConstants.PRODUCT_IMAGE_DIR;
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        byte[] image = new byte[0];
+        image = FileUtils.readFileToByteArray(new File(uploadDir + fileName));
+        this.productService.updateImagenProduct(fileName, id);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+    }
 	
 
 

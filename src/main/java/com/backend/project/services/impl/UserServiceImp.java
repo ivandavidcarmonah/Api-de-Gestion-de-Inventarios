@@ -61,7 +61,6 @@ public class UserServiceImp implements UserService {
 	 * Devolver el listado ordenada
 	 */
 	public UserResponseDTO getUsers(int numberPage, int pageSize, String orderBy, String sortDir) {
-		// TODO Auto-generated method stub
 		Sort sort = sortDir.equalsIgnoreCase( Sort.Direction.ASC.name()) ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending(); 
 		Pageable pageable = PageRequest.of(numberPage, pageSize, sort);
 		Page<UserEntity> users = this.userRepository.findAll(pageable);

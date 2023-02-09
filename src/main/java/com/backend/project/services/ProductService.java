@@ -22,4 +22,8 @@ public interface ProductService {
 
 	public void delete(long id);
 
+	public ProductDTO getById(long id);
+
+	public ProductDTO updateImagenProduct(String fileName, long id);
+
 }
