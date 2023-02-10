@@ -1,6 +1,9 @@
 package com.backend.project.entities;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,7 +12,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -41,9 +48,9 @@ public class SaleEntity  extends AuditModel{
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	private UserEntity user;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	private SaleDetailEntity saleDetail;
-
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+	private Set<InvoiceLineEntity> invoiceLine = new HashSet<InvoiceLineEntity>();
+	
 	
 	public SaleEntity() {
 		super();
@@ -52,7 +59,7 @@ public class SaleEntity  extends AuditModel{
 
 	public SaleEntity(LocalDateTime creation_date, String created_by, LocalDateTime update_date, String update_by,
 			Boolean deleted, LocalDateTime deleted_date, String deleted_by, long id, long clienteId, float impuesto,
-			float total, String estado, UserEntity user, SaleDetailEntity saleDetail) {
+			float total, String estado, UserEntity user) {
 		super(creation_date, created_by, update_date, update_by, deleted, deleted_date, deleted_by);
 		this.id = id;
 		this.clienteId = clienteId;
@@ -60,9 +67,16 @@ public class SaleEntity  extends AuditModel{
 		this.total = total;
 		this.estado = estado;
 		this.user = user;
-		this.saleDetail = saleDetail;
 	}
 
+
+	public Set<InvoiceLineEntity> getInvoiceLines() {
+		return invoiceLine;
+	}
+
+	public void setInvoiceLines(Set<InvoiceLineEntity> invoiceLine) {
+		this.invoiceLine = invoiceLine;
+	}
 
 	public long getId() {
 		return id;
@@ -123,19 +137,10 @@ public class SaleEntity  extends AuditModel{
 		this.user = user;
 	}
 
-
-	public SaleDetailEntity getSaleDetail() {
-		return saleDetail;
-	}
-
-
-	public void setSaleDetail(SaleDetailEntity saleDetail) {
-		this.saleDetail = saleDetail;
-	}
-
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
 	
 }

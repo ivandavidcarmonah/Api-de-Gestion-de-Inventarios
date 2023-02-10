@@ -4,6 +4,7 @@ package com.backend.project.DTO.SaleDTOs;
 public class SaleResponseDTO {
 
 	private SaleDTO saleDTO;
+	
 	public SaleResponseDTO () {}
 	public SaleResponseDTO(SaleDTO saleDTO) {
 		super();

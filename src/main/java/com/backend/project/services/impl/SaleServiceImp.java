@@ -3,8 +3,10 @@ package com.backend.project.services.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +16,13 @@ import org.springframework.stereotype.Service;
 import com.backend.project.DTO.SaleDTOs.SaleDTO;
 import com.backend.project.DTO.SaleDTOs.SaleProductDTO;
 import com.backend.project.DTO.SaleDTOs.SaleResponseDTO;
+import com.backend.project.entities.InvoiceLineEntity;
 import com.backend.project.entities.ProductEntity;
-import com.backend.project.entities.SaleDetailEntity;
 import com.backend.project.entities.SaleEntity;
 import com.backend.project.entities.UserEntity;
 import com.backend.project.exceptions.ResourceNotFoundException;
+import com.backend.project.repositories.InvoiceLineRepository;
 import com.backend.project.repositories.ProductRepository;
-import com.backend.project.repositories.SaleDetailRepository;
 import com.backend.project.repositories.SaleRepository;
 import com.backend.project.repositories.UserRepository;
 import com.backend.project.services.SaleService;
@@ -38,7 +40,7 @@ public class SaleServiceImp implements SaleService {
 	private ProductRepository productRepository;
 	
 	@Autowired
-	private SaleDetailRepository saleDetailRepository; 
+	private InvoiceLineRepository invoiceLineRepository;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -51,13 +53,7 @@ public class SaleServiceImp implements SaleService {
 		 */
 		List<ProductEntity> products = this.buscarProducts(saleDTO.getProducts());
 		
-		/**
-		 * Generar el detalle de la venta SaleDetailEntity
-		 */
-		SaleDetailEntity detailEntity = new SaleDetailEntity();
-		detailEntity.setProduct(products);
-		detailEntity.generarTotal(products);
-		this.saleDetailRepository.save(detailEntity);
+		Set<InvoiceLineEntity> invoiceLines = new HashSet<InvoiceLineEntity>();
 		/**
 		 * Generar la cabecera de la venta SaleEntity
 		 */
@@ -70,10 +66,35 @@ public class SaleServiceImp implements SaleService {
 		UserEntity user = this.userRepository.findByEmail(principal).orElseThrow(() -> new ResourceNotFoundException("Users", "email", principal));
 		saleEntity.setUser(user);
 		
-		saleEntity.setSaleDetail(detailEntity);
+		
+		/**
+		 * Generar el detalle de la venta SaleDetailEntity
+		 */
+		int i = 0;
+		while (products.size() > 0) {
+			InvoiceLineEntity lineEntity = new InvoiceLineEntity();
+			int cantidad = 0;
+			lineEntity.setPrice(products.get(i).getPrice());
+			lineEntity.setProduct(products.get(i).getName());
+			List<ProductEntity> element = new ArrayList<>();
+			for (int j = 0; j < products.size(); j++) {
+				if (products.get(i).getId() == products.get(j).getId()) {
+					element.add(products.get(j));
+					cantidad = cantidad+1;
+				}
+			}
+			lineEntity.setQuantity(cantidad);
+			
+			invoiceLines.add(this.invoiceLineRepository.save(lineEntity)) ;
+			products.removeAll(element);
+			
+		}
+		saleEntity.setInvoiceLines(invoiceLines);
+		SaleEntity entity = this.repository.save(saleEntity);
+		entity.setInvoiceLines(invoiceLines);
 		
 		SaleResponseDTO saleResponseDTO = new SaleResponseDTO();
-		saleResponseDTO.setSaleDTO(this.mapEntidad(this.repository.save(saleEntity)));
+		saleResponseDTO.setSaleDTO(this.mapEntidad(entity));
 		
 		
 		return saleResponseDTO;
