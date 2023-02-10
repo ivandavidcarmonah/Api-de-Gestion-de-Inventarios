@@ -63,11 +63,11 @@ public class UserEntity  extends AuditModel{
 	@Column(name = "pictureUser", nullable = true)
 	private String pictureUser;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(referencedColumnName = "id")
 	private GenderEntity gender;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(referencedColumnName = "id")
 	private LanguageEntity language;
 	

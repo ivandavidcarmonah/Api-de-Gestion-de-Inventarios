@@ -60,7 +60,7 @@ public class ProductController {
 
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR') or hasRole('ROLE_VISITANTE')")
 	@GetMapping("/list-products")
-	public ProductResponseDTO getUsers(@Valid
+	public ProductResponseDTO getProducts(@Valid
 			@RequestParam(name = "numberPage", defaultValue = "0", required = false) int numberPage,
 			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize,
 			@RequestParam(name = "orderBy", defaultValue = "id", required = false) String orderBy,

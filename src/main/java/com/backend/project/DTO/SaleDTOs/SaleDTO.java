@@ -1,7 +1,7 @@
 package com.backend.project.DTO.SaleDTOs;
 
-import java.util.HashSet;
-import java.util.Set;
+
+import com.backend.project.DTO.UserDTOs.UserDTO;
 
 public class SaleDTO {
 
@@ -14,12 +14,16 @@ public class SaleDTO {
 	private float impuesto;
 	private float total;
 	private String estado;
+	private UserDTO user;
+	private Object saleDetail;
 	public SaleDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+
 	public SaleDTO(long id, long clienteId, long usuarioId, String checkType, String checkNum, String checkSerie,
-			float impuesto, float total, String estado) {
+			float impuesto, float total, String estado, UserDTO user, Object saleDetail) {
 		super();
 		this.id = id;
 		this.clienteId = clienteId;
@@ -30,7 +34,19 @@ public class SaleDTO {
 		this.impuesto = impuesto;
 		this.total = total;
 		this.estado = estado;
+		this.user = user;
+		this.saleDetail = saleDetail;
 	}
+
+
+	public UserDTO getUser() {
+		return user;
+	}
+
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -84,6 +100,16 @@ public class SaleDTO {
 	}
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+
+	public Object getSaleDetail() {
+		return saleDetail;
+	}
+
+
+	public void setSaleDetail(Object saleDetail) {
+		this.saleDetail = saleDetail;
 	}
 
 	

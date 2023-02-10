@@ -31,8 +31,6 @@ public class PublicationServiceImp extends AuditModel implements PublicationServ
 	@Override
 	public PublicationDTO createPublication(PublicationDTO dto) {
 		// Convert DTO to Entities
-		System.out.print(this.currentUser());
-		
 		PublicationsEntity publication = this.mapEntitie(dto);
 		PublicationsEntity newPublication = this.publicationRepository.save(publication);
 		

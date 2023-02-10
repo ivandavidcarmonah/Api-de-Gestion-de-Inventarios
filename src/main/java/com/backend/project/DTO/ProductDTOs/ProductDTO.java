@@ -1,6 +1,7 @@
 package com.backend.project.DTO.ProductDTOs;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -43,7 +44,7 @@ public class ProductDTO {
 	
 	private Date creaDate;
 	
-	private Date modDate;	
+	private LocalDateTime update_date;	
 
 	private long creaUser;
 	
@@ -59,7 +60,7 @@ public class ProductDTO {
 			String description, @NotEmpty String preparesin, String allergies,
 			@NotEmpty @Size(min = 1, message = "PRODUCT.ERROR.PRICE_PRODUCT") double price, boolean isValid,
 			boolean isSpent, String picture, TypesProductDTO typeProduct, CompanyDTO company, Date creaDate,
-			Date modDate, long creaUser, long modUser) {
+			LocalDateTime update_date, long creaUser, long modUser) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -73,7 +74,7 @@ public class ProductDTO {
 		this.typeProduct = typeProduct;
 		this.company = company;
 		this.creaDate = creaDate;
-		this.modDate = modDate;
+		this.setUpdate_date(update_date);
 		this.creaUser = creaUser;
 		this.modUser = modUser;
 	}
@@ -183,13 +184,6 @@ public class ProductDTO {
 		this.creaDate = creaDate;
 	}
 
-	public Date getModDate() {
-		return modDate;
-	}
-
-	public void setModDate(Date modDate) {
-		this.modDate = modDate;
-	}
 
 	public long getCreaUser() {
 		return creaUser;
@@ -205,6 +199,14 @@ public class ProductDTO {
 
 	public void setModUser(long modUser) {
 		this.modUser = modUser;
+	}
+
+	public LocalDateTime getUpdate_date() {
+		return update_date;
+	}
+
+	public void setUpdate_date(LocalDateTime update_date) {
+		this.update_date = update_date;
 	}
 	
 }

@@ -99,8 +99,6 @@ public class ProductServiceImp implements ProductService {
 		}		
 		ProductResponseDTO respDto = new ProductResponseDTO();
 		respDto.setDataList(listProductsDto);
-
-		
 		
 		return respDto;		
 	}
@@ -219,11 +217,5 @@ public class ProductServiceImp implements ProductService {
 	private ProductEntity mapDTO(RegisterProductDTO dto) {
 		return this.modelMapper.map(dto, ProductEntity.class);
 	}
-
-
-
-
-
-
 
 }
