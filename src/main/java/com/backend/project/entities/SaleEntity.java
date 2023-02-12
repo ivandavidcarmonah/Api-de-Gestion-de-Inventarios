@@ -49,6 +49,7 @@ public class SaleEntity  extends AuditModel{
 	private UserEntity user;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinTable(name = "sale_invoice_line", joinColumns = @JoinColumn(name = "sale_entity_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "invoice_line_id", referencedColumnName = "id"))
 	private Set<InvoiceLineEntity> invoiceLine = new HashSet<InvoiceLineEntity>();
 	
 	

@@ -9,6 +9,7 @@ public interface SaleService {
 
 	
 	public SaleDTO createSale(SaleProductDTO saleDTO);
+	public SaleDTO getSaleById(Long  id);
 	
 	
 }

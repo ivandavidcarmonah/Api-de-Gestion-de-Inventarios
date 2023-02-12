@@ -105,6 +105,24 @@ public class SaleServiceImp implements SaleService {
 		return saleResponseDTO;
 	}
 	
+	public SaleDTO getSaleById(Long id) {
+		
+		SaleEntity entity = this.repository.findById(id)
+	    		 .orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
+		Set<InvoceLineDTO> invoiceLine = new HashSet<InvoceLineDTO>();
+		entity.getInvoiceLines().forEach(element -> {
+			invoiceLine.add(this.mapEntidad(element));
+		});
+		
+		SaleDTO dto = new SaleDTO();
+		dto =  this.mapEntidad(entity);
+		dto.setInvoiceLine(invoiceLine);
+		
+		return dto;
+	
+	}
+	
+	
 	private List<ProductEntity> buscarProducts(List<Integer> Ids) {
 		List<ProductEntity> products = new ArrayList<>();
 		for (int i = 0; i < Ids.size(); i++) {

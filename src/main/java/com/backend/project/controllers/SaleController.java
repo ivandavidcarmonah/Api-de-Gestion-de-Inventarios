@@ -51,9 +51,15 @@ public class SaleController {
 	public ResponseEntity<?> newSale(@Valid @RequestBody SaleProductDTO products){
 		return new ResponseEntity<>(this.service.createSale(products), HttpStatus.ACCEPTED);
 	}
+	
+	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR') or hasRole('ROLE_VISITANTE')")
+	@GetMapping("/sale/{id}")
+	public ResponseEntity<SaleDTO> getById(@PathVariable(name = "id") long id) {
+		return ResponseEntity.ok( this.service.getSaleById(id));
+	}
 
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR') or hasRole('ROLE_VISITANTE')")
-	@GetMapping("/list-products")
+	@GetMapping("/list-sales")
 	public ProductResponseDTO getSales(@Valid
 			@RequestParam(name = "numberPage", defaultValue = "0", required = false) int numberPage,
 			@RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize,
