@@ -12,20 +12,18 @@ public class InvoceLineDTO {
     
     private double quantity;
     
-    private SaleEntity sale;
     
     
 	public InvoceLineDTO() {
 		super();
 	}
 
-	public InvoceLineDTO(Long id, String product, double price, double quantity, SaleEntity sale) {
+	public InvoceLineDTO(Long id, String product, double price, double quantity) {
 		super();
 		this.id = id;
 		this.product = product;
 		this.price = price;
 		this.quantity = quantity;
-		this.sale = sale;
 	}
 
 	public Long getId() {
@@ -60,11 +58,5 @@ public class InvoceLineDTO {
 		this.quantity = quantity;
 	}
 
-	public SaleEntity getSale() {
-		return sale;
-	}
-
-	public void setSale(SaleEntity sale) {
-		this.sale = sale;
-	}
+	
 }

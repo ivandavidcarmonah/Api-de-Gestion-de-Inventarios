@@ -48,7 +48,7 @@ public class SaleEntity  extends AuditModel{
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	private UserEntity user;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	private Set<InvoiceLineEntity> invoiceLine = new HashSet<InvoiceLineEntity>();
 	
 	

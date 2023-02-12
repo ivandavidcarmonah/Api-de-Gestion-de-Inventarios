@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.backend.project.DTO.SaleDTOs.InvoceLineDTO;
 import com.backend.project.DTO.SaleDTOs.SaleDTO;
 import com.backend.project.DTO.SaleDTOs.SaleProductDTO;
 import com.backend.project.DTO.SaleDTOs.SaleResponseDTO;
@@ -46,7 +47,7 @@ public class SaleServiceImp implements SaleService {
 	private UserRepository userRepository;
 
 	@Override
-	public SaleResponseDTO createSale(SaleProductDTO saleDTO) {
+	public SaleDTO createSale(SaleProductDTO saleDTO) {
 		
 		/**
 		 * Obtener listado de productos seleccionados para la venta
@@ -91,11 +92,15 @@ public class SaleServiceImp implements SaleService {
 		}
 		saleEntity.setInvoiceLines(invoiceLines);
 		SaleEntity entity = this.repository.save(saleEntity);
-		entity.setInvoiceLines(invoiceLines);
 		
-		SaleResponseDTO saleResponseDTO = new SaleResponseDTO();
-		saleResponseDTO.setSaleDTO(this.mapEntidad(entity));
-		
+		SaleDTO saleResponseDTO = new SaleDTO();
+		saleResponseDTO = this.mapEntidad(entity);
+
+		Set<InvoceLineDTO> invoiceLine = new HashSet<InvoceLineDTO>();
+		entity.getInvoiceLines().forEach(element -> {
+			invoiceLine.add(this.mapEntidad(element));
+		});
+		saleResponseDTO.setInvoiceLine(invoiceLine);
 		
 		return saleResponseDTO;
 	}
@@ -123,6 +128,11 @@ public class SaleServiceImp implements SaleService {
 	 */
 	private SaleDTO mapEntidad(SaleEntity entidad) {
 		SaleDTO dto = this.modelMapper.map(entidad, SaleDTO.class);
+		return dto;
+	}
+	
+	private InvoceLineDTO mapEntidad(InvoiceLineEntity entidad) {
+		InvoceLineDTO dto = this.modelMapper.map(entidad, InvoceLineDTO.class);
 		return dto;
 	}
 	
