@@ -1,11 +1,21 @@
 package com.backend.project.services.impl;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.imageio.ImageIO;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +38,8 @@ import com.backend.project.repositories.ProductRepository;
 import com.backend.project.repositories.UserRepository;
 import com.backend.project.services.ProductService;
 import com.backend.project.utils.AppConstants;
+import com.backend.project.utils.BarCode;
+import com.backend.project.utils.FileUploadUtil;
 
 @Service
 public class ProductServiceImp implements ProductService {
@@ -74,6 +86,34 @@ public class ProductServiceImp implements ProductService {
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserEntity user = this.userRepository.findByEmail(principal).orElseThrow(() -> new ResourceNotFoundException("Users", "email", principal));
 		ProductEntity entity = new ProductEntity();
+		
+		String uploadDir = AppConstants.PRODUCT_IMAGE__BARCODE;
+		
+		try {
+			BufferedImage bufferedImage = BarCode.generateCode128BarCodeImage(dto.getBarCode());
+			String fileName = dto.getBarCode()+"_"+ dto.getName();
+			File outputfile = new File(dto.getName());
+		    ImageIO.write(bufferedImage, "png", outputfile);
+		    Path uploadPath = Paths.get(uploadDir);
+		    if (!Files.exists(uploadPath)) {
+	            Files.createDirectories(uploadPath);
+	        }
+		    InputStream targetStream = new FileInputStream(outputfile);
+		    try (InputStream inputStream = targetStream) {
+	            Path filePath = uploadPath.resolve(fileName+".png");
+	            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+	        } catch (IOException ioe) {        
+	            throw new IOException("Could not save image file: " + fileName, ioe);
+	        }     
+		    
+		    
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+//		FileUploadUtil.saveFile(uploadDir, "BAR_CODE" + dto.getName(), BarCode.generateCode128BarCodeImage("22225"));
+//		
+		
 		entity = this.mapDTO(dto);
 		entity.setUser(user);
 		ProductDTO resDtp = this.mapEntitie(this.productRepository.save(entity)); 

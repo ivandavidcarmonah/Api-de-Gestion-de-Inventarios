@@ -20,9 +20,10 @@ public class RegisterProductDTO {
 	private String name;
 
 	private String description;
-
 	
 	private String preparesin;
+	
+	private String barCode;
 
 	private String allergies;
 
@@ -50,15 +51,15 @@ public class RegisterProductDTO {
 		super();
 	}
 
-	public RegisterProductDTO( @NotEmpty @Size(min = 3, message = "PRODUCT.ERROR.TITULO_PRODUCT") String name,
-			String description, @NotEmpty String preparesin, String allergies,
-			@NotEmpty @Size(min = 1, message = "PRODUCT.ERROR.PRICE_PRODUCT") double price, boolean isValid,
+	public RegisterProductDTO(@NotEmpty @Size(min = 3, message = "PRODUCT.ERROR.TITULO_PRODUCT") String name,
+			String description, String preparesin, String barCode, String allergies, double price, boolean isValid,
 			boolean isSpent, String picture, TypesProductDTO typeProduct, CompanyDTO company, Date creaDate,
 			Date modDate, long creaUser, long modUser) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.preparesin = preparesin;
+		this.barCode = barCode;
 		this.allergies = allergies;
 		this.price = price;
 		this.isValid = isValid;
@@ -71,9 +72,16 @@ public class RegisterProductDTO {
 		this.creaUser = creaUser;
 		this.modUser = modUser;
 	}
+
 	
-	
-	
+	public String getBarCode() {
+		return this.barCode;
+	}
+
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
+	}
+
 
 	public String getName() {
 		return name;

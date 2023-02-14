@@ -54,6 +54,10 @@ public class ProductEntity extends AuditModel {
 	@Column(nullable = true)
 	private String picture;
 	
+	@Column(nullable = true)
+	private String barCode;
+	
+	
 	@Column(nullable = false)
 	private boolean isSpent;
 
@@ -61,11 +65,10 @@ public class ProductEntity extends AuditModel {
 	@ManyToOne
 	private UserEntity user;
 
-
 	public ProductEntity(LocalDateTime creation_date, String created_by, LocalDateTime update_date, String update_by,
 			Boolean deleted, LocalDateTime deleted_date, String deleted_by, long id, String name, String description,
-			String preparesin, String allergies, double price, boolean isValid, String picture, boolean isSpent,
-			UserEntity user) {
+			String preparesin, String allergies, double price, boolean isValid, String picture, String barCode,
+			boolean isSpent, UserEntity user) {
 		super(creation_date, created_by, update_date, update_by, deleted, deleted_date, deleted_by);
 		this.id = id;
 		this.name = name;
@@ -75,11 +78,21 @@ public class ProductEntity extends AuditModel {
 		this.price = price;
 		this.isValid = isValid;
 		this.picture = picture;
+		this.barCode = barCode;
 		this.isSpent = isSpent;
 		this.user = user;
 	}
-	
+
 	public ProductEntity() {}
+
+	
+	public String getBarCode() {
+		return barCode;
+	}
+
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
+	}
 
 	public long getId() {
 		return id;

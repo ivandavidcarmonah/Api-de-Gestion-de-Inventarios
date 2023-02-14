@@ -30,6 +30,9 @@ public class ProductDTO {
 
 	private String allergies;
 
+	private String barCode;
+
+	
 	private double price;
 
 	private boolean isValid;
@@ -57,16 +60,16 @@ public class ProductDTO {
 	}
 
 	public ProductDTO(long id, @NotEmpty @Size(min = 3, message = "PRODUCT.ERROR.TITULO_PRODUCT") String name,
-			String description, @NotEmpty String preparesin, String allergies,
-			@NotEmpty @Size(min = 1, message = "PRODUCT.ERROR.PRICE_PRODUCT") double price, boolean isValid,
+			String description, String preparesin, String allergies, String barCode, double price, boolean isValid,
 			boolean isSpent, String picture, TypesProductDTO typeProduct, CompanyDTO company, Date creaDate,
-			LocalDateTime update_date, long creaUser, long modUser) {
+			LocalDateTime update_date, long creaUser, long modUser, UserDTO user) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.preparesin = preparesin;
 		this.allergies = allergies;
+		this.barCode = barCode;
 		this.price = price;
 		this.isValid = isValid;
 		this.isSpent = isSpent;
@@ -74,11 +77,12 @@ public class ProductDTO {
 		this.typeProduct = typeProduct;
 		this.company = company;
 		this.creaDate = creaDate;
-		this.setUpdate_date(update_date);
+		this.update_date = update_date;
 		this.creaUser = creaUser;
 		this.modUser = modUser;
+		this.user = user;
 	}
-	
+
 	public UserDTO getUser() {
 		return user;
 	}
@@ -207,6 +211,14 @@ public class ProductDTO {
 
 	public void setUpdate_date(LocalDateTime update_date) {
 		this.update_date = update_date;
+	}
+
+	public String getBarCode() {
+		return barCode;
+	}
+
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
 	}
 	
 }

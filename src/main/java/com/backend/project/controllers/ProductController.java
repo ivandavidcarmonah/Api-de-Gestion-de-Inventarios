@@ -71,7 +71,7 @@ public class ProductController {
 	
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
 	@PutMapping("/update-product")
-	public ResponseEntity<ProductDTO> updateUser(@Valid @RequestBody ProductDTO dto){
+	public ResponseEntity<ProductDTO> updateProduct(@Valid @RequestBody ProductDTO dto){
 		
 		ProductDTO resDto = this.productService.updateProduct(dto);
 
@@ -88,7 +88,7 @@ public class ProductController {
 	
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteUser(@PathVariable(name = "id") long id) {
+	public ResponseEntity<String> deleteProduct(@PathVariable(name = "id") long id) {
 		this.productService.delete(id);
 		return new ResponseEntity<>("BORRADO.CORRECTO", HttpStatus.OK);
 
