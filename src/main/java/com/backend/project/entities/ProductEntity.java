@@ -18,7 +18,8 @@ import javax.persistence.UniqueConstraint;
  *
  */
 @Entity
-@Table(name = "product", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@Table(name = "product", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }), 
+		@UniqueConstraint(columnNames = { "barCode" }) })
 public class ProductEntity extends AuditModel {
 
 	/**

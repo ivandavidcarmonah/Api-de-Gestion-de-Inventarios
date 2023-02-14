@@ -26,6 +26,19 @@ public class FileUploadUtil {
         }      
     }
 	
+	public static String cadenaNumberAleatoria(int longitud) {
+	    // El banco de caracteres
+	    String banco = "95175368420";
+	    // La cadena en donde iremos agregando un carácter aleatorio
+	    String cadena = "";
+	    for (int x = 0; x < longitud; x++) {
+	        int indiceAleatorio = numeroAleatorioEnRango(0, banco.length() - 1);
+	        char caracterAleatorio = banco.charAt(indiceAleatorio);
+	        cadena += caracterAleatorio;
+	    }
+	    return cadena;
+	}
+	
 	public static String cadenaAleatoria(int longitud) {
 	    // El banco de caracteres
 	    String banco = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

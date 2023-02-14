@@ -86,33 +86,14 @@ public class ProductServiceImp implements ProductService {
 		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserEntity user = this.userRepository.findByEmail(principal).orElseThrow(() -> new ResourceNotFoundException("Users", "email", principal));
 		ProductEntity entity = new ProductEntity();
-		
-		String uploadDir = AppConstants.PRODUCT_IMAGE__BARCODE;
+		dto.setBarCode(FileUploadUtil.cadenaNumberAleatoria(10));
 		
 		try {
-			BufferedImage bufferedImage = BarCode.generateCode128BarCodeImage(dto.getBarCode());
-			String fileName = dto.getBarCode()+"_"+ dto.getName();
-			File outputfile = new File(dto.getName());
-		    ImageIO.write(bufferedImage, "png", outputfile);
-		    Path uploadPath = Paths.get(uploadDir);
-		    if (!Files.exists(uploadPath)) {
-	            Files.createDirectories(uploadPath);
-	        }
-		    InputStream targetStream = new FileInputStream(outputfile);
-		    try (InputStream inputStream = targetStream) {
-	            Path filePath = uploadPath.resolve(fileName+".png");
-	            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-	        } catch (IOException ioe) {        
-	            throw new IOException("Could not save image file: " + fileName, ioe);
-	        }     
-		    
-		    
+			BarCode.generateCode128BarCodeImage( dto.getBarCode());
+			
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println(e.getMessage());
 		}
-//		FileUploadUtil.saveFile(uploadDir, "BAR_CODE" + dto.getName(), BarCode.generateCode128BarCodeImage("22225"));
-//		
 		
 		entity = this.mapDTO(dto);
 		entity.setUser(user);

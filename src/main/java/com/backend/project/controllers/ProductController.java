@@ -105,6 +105,17 @@ public class ProductController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
     
+    @GetMapping("/get-bar-code/{filename}")
+    public ResponseEntity<byte[]> getImageBarCode(@PathVariable("filename") String filename) {
+        byte[] image = new byte[0];
+        try {
+            image = FileUtils.readFileToByteArray(new File(AppConstants.PRODUCT_IMAGE__BARCODE+ filename+".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+    }
+    
 	@PreAuthorize("hasRole('ROLE_SUPER_ROOT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
     @PostMapping("/save-file/{id}")
     public ResponseEntity<byte[]> saveFile(@PathVariable("id") long id, @RequestParam("file") MultipartFile multipartFile) throws IOException {
@@ -116,8 +127,5 @@ public class ProductController {
         this.productService.updateImagenProduct(fileName, id);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
-	
-
-
 	
 }
