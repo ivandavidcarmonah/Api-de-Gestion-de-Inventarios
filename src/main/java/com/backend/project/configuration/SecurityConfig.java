@@ -45,7 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// TODO Auto-generated method stub
 		http.csrf().disable()
 			.exceptionHandling()
 			.authenticationEntryPoint(this.jwtAuthenticationEntryPoint)
@@ -74,29 +73,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// TODO Auto-generated method stub
 		auth.userDetailsService(this.customUserDetailsService).passwordEncoder(passwordEncoder());
 	}
 	
 	@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
-		// TODO Auto-generated method stub
 		return super.authenticationManagerBean();
 	}
 	
 
 	
-	/**
-	@Override
-	@Bean
-	protected UserDetailsService userDetailsService() {
-		// TODO Auto-generated method stub
-		UserDetails userDetailsAdmin = User.builder().username("admin").password(passwordEncoder().encode("password")).roles("ADMIN_ROOT").build();
-		UserDetails userDetailsUsuario = User.builder().username("ivan").password(passwordEncoder().encode("user")).roles("USER").build();
-		
-		return new InMemoryUserDetailsManager(userDetailsAdmin, userDetailsUsuario);
-	}
-	**/
 	
 }
